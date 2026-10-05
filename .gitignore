@@ -1,2 +1,32 @@
 # Machine-owned ZCode state (workflow drafts, session state)
 .zcode/
+
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+
+# Environment / secrets (keep .env.example tracked)
+.env*
+!.env.example
+
+# Local SQLite database and SQLite sidecar files
+dev.db
+dev.db-shm
+dev.db-wal
+dev.db-journal
+
+# Drizzle-kit metadata artifacts
+.drizzle/
+drizzle/meta/
+
+# TypeScript incremental build info
+*.tsbuildinfo
+
+# Playwright e2e artifacts
+test-results/
+playwright-report/
+
+# OS noise
+.DS_Store
