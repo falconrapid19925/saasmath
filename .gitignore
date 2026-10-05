@@ -28,5 +28,12 @@ drizzle/meta/
 test-results/
 playwright-report/
 
+# Agent-generated HTML reports (out/saasmath-plan.md stays tracked)
+out/*.html
+
+# Local agent/machine state
+.video_agent/
+.zcodeignore
+
 # OS noise
 .DS_Store
