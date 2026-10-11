@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SaasMath — Latihan matematika 10 menit sehari</title>
+    <meta
+      name="description"
+      content="Latihan hitung ala Kumon untuk siswa kelas 4–6 SD: soal baru setiap hari, target waktu personal, bantuan model batang. Coba demonya langsung di sini."
+    />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <!-- All paths relative: the site lives under /saasmath/ on project pages. -->
+    <style>
+      :root {
+        --blue: #2563eb;
+        --blue-dark: #1d4ed8;
+        --blue-50: #eff6ff;
+        --blue-100: #dbeafe;
+        --amber: #fbbf24;
+        --ink: #0f172a;
+        --muted: #475569;
+        --card: #ffffff;
+        --bg: #f1f5f9;
+        --ok: #16a34a;
+        --bad: #dc2626;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family:
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          "Helvetica Neue",
+          Arial,
+          sans-serif;
+        line-height: 1.6;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      .wrap {
+        max-width: 28rem;
+        margin: 0 auto;
+        padding: 0 1.25rem 3rem;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 1.25rem 0 0;
+      }
+      header img {
+        width: 2.25rem;
+        height: 2.25rem;
+      }
+      header b {
+        font-size: 1.15rem;
+        letter-spacing: -0.01em;
+      }
+      .hero {
+        text-align: center;
+        padding: 1.75rem 0 1.5rem;
+      }
+      .hero .emoji {
+        font-size: 2.75rem;
+        margin: 0;
+      }
+      h1 {
+        font-size: 1.65rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        margin: 0.6rem 0 0;
+      }
+      .hero p {
+        color: var(--muted);
+        margin: 0.6rem auto 0;
+        max-width: 26rem;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid #e2e8f0;
+        border-radius: 1rem;
+        padding: 1.25rem;
+        margin-bottom: 1.25rem;
+        box-shadow: 0 1px 2px rgb(15 23 42 / 0.05);
+      }
+      h2 {
+        font-size: 1.15rem;
+        font-weight: 800;
+        margin: 0 0 0.75rem;
+      }
+      .card p {
+        margin: 0 0 0.75rem;
+      }
+      .card p:last-child {
+        margin-bottom: 0;
+      }
+      /* --- demo --- */
+      select,
+      button {
+        font: inherit;
+      }
+      select {
+        width: 100%;
+        min-height: 3rem;
+        padding: 0 0.75rem;
+        border: 1px solid #cbd5e1;
+        border-radius: 0.75rem;
+        background: #fff;
+        color: var(--ink);
+        margin-bottom: 0.75rem;
+      }
+      .btn {
+        display: block;
+        width: 100%;
+        min-height: 3.25rem;
+        border: 0;
+        border-radius: 1rem;
+        background: var(--blue);
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.05rem;
+        cursor: pointer;
+        box-shadow: 0 1px 3px rgb(37 99 235 / 0.4);
+      }
+      .btn:active {
+        background: var(--blue-dark);
+      }
+      .btn.ghost {
+        background: #fff;
+        color: var(--blue);
+        border: 1px solid var(--blue-100);
+        box-shadow: none;
+      }
+      .hint {
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin: 0.75rem 0 0 !important;
+      }
+      .progress-text {
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin: 0 0 0.5rem !important;
+      }
+      .progress-track {
+        height: 0.5rem;
+        border-radius: 999px;
+        background: var(--blue-100);
+        overflow: hidden;
+        margin-bottom: 1.25rem;
+      }
+      .progress-fill {
+        height: 100%;
+        width: 0%;
+        border-radius: 999px;
+        background: var(--blue);
+        transition: width 0.2s ease;
+      }
+      .prompt {
+        text-align: center;
+        font-size: 2.1rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        font-variant-numeric: tabular-nums;
+        margin: 0 0 1.25rem !important;
+        min-height: 3.25rem;
+      }
+      .answer-row {
+        display: flex;
+        gap: 0.6rem;
+      }
+      #demo-answer {
+        flex: 1;
+        min-width: 0;
+        min-height: 3.25rem;
+        border: 2px solid #cbd5e1;
+        border-radius: 1rem;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+      }
+      #demo-answer:focus {
+        outline: none;
+        border-color: var(--blue);
+      }
+      #demo-submit {
+        width: 4.25rem;
+        min-height: 3.25rem;
+        border: 0;
+        border-radius: 1rem;
+        background: var(--blue);
+        color: #fff;
+        font-size: 1.25rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .quit-row {
+        margin-top: 0.85rem;
+        text-align: center;
+      }
+      .linkish {
+        background: none;
+        border: 0;
+        padding: 0;
+        color: var(--muted);
+        text-decoration: underline;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+      .result-hero {
+        text-align: center;
+        margin-bottom: 1rem !important;
+      }
+      .result-hero .big {
+        font-size: 1.4rem;
+        font-weight: 800;
+      }
+      .stat {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.5rem 0;
+        border-top: 1px solid #e2e8f0;
+        font-size: 0.95rem;
+      }
+      .stat span:first-child {
+        color: var(--muted);
+      }
+      .stat b {
+        text-align: right;
+      }
+      .gate {
+        background: var(--blue-50);
+        border-radius: 0.75rem;
+        padding: 0.7rem 0.9rem;
+        margin: 0.9rem 0;
+        font-size: 0.95rem;
+      }
+      .review {
+        list-style: none;
+        margin: 0.75rem 0;
+        padding: 0;
+        font-variant-numeric: tabular-nums;
+      }
+      .review li {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.4rem 0;
+        border-top: 1px dashed #e2e8f0;
+        font-size: 0.95rem;
+      }
+      .review .mark {
+        flex: none;
+        width: 1.4rem;
+        text-align: center;
+      }
+      .review .mark.ok {
+        color: var(--ok);
+        font-weight: 700;
+      }
+      .review .mark.bad {
+        color: var(--bad);
+        font-weight: 700;
+      }
+      .review .q {
+        flex: 1;
+      }
+      .review .a {
+        flex: none;
+        color: var(--muted);
+      }
+      .review .a b {
+        color: var(--ink);
+      }
+      .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+      /* --- features / about --- */
+      ul.features {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+      ul.features li {
+        padding: 0.3rem 0;
+      }
+      a {
+        color: var(--blue);
+      }
+      footer {
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <header>
+        <img src="./icon.svg" alt="Logo SaasMath" width="36" height="36" />
+        <b>SaasMath</b>
+      </header>
+
+      <section class="hero">
+        <p class="emoji" aria-hidden="true">➗ ✖️ ➕</p>
+        <h1>Latihan matematika 10 menit sehari</h1>
+        <p>
+          Soal baru setiap hari sesuai kemampuanmu, diukur dengan target waktu
+          personal (SCT), dan dibimbing dengan <b>model batang</b> saat
+          kesulitan — untuk siswa kelas 4–6 SD.
+        </p>
+      </section>
+
+      <section class="card" id="demo">
+        <h2>Coba dulu, langsung di sini 👇</h2>
+
+        <div id="demo-setup">
+          <p>
+            Demo ini memakai mesin soal yang sama dengan aplikasi: soal selalu
+            baru, waktu diukur diam-diam, dan hasilnya dinilai gerbang
+            penguasaan ala Kumon.
+          </p>
+          <label for="skill-select">Pilih latihan</label>
+          <select id="skill-select"></select>
+          <button class="btn" id="demo-start" type="button">Mulai ▶</button>
+          <p class="hint">
+            Ketik jawaban lalu tekan Enter. Ingin melewati soal? Kirim kosong.
+          </p>
+        </div>
+
+        <div id="demo-play" hidden>
+          <p class="progress-text" id="demo-progress-text"></p>
+          <div
+            class="progress-track"
+            role="progressbar"
+            aria-labelledby="demo-progress-text"
+          >
+            <div class="progress-fill" id="demo-progress-fill"></div>
+          </div>
+          <p class="prompt" id="demo-prompt"></p>
+          <div class="answer-row">
+            <input
+              id="demo-answer"
+              inputmode="numeric"
+              autocomplete="off"
+              enterkeyhint="next"
+              placeholder="?"
+              aria-label="Jawaban"
+            />
+            <button id="demo-submit" type="button" aria-label="Jawab">➡</button>
+          </div>
+          <div class="quit-row">
+            <button class="linkish" id="demo-quit" type="button">
+              Berhenti
+            </button>
+          </div>
+        </div>
+
+        <div id="demo-result" hidden>
+          <p class="result-hero"><span class="big" id="demo-score"></span></p>
+          <div class="stat">
+            <span>Waktu</span><b id="demo-time"></b>
+          </div>
+          <div class="stat"><span>Bintang</span><b id="demo-stars"></b></div>
+          <div class="gate" id="demo-gate"></div>
+          <ol class="review" id="demo-review"></ol>
+          <div class="actions">
+            <button class="btn" id="demo-again" type="button">
+              Soal baru 🔁
+            </button>
+            <button class="btn ghost" id="demo-back" type="button">
+              Ganti latihan
+            </button>
+          </div>
+        </div>
+
+        <noscript>
+          <p class="hint">
+            Demo interaktif butuh JavaScript. Situs ini tetap bisa dibaca
+            tanpa JavaScript.
+          </p>
+        </noscript>
+      </section>
+
+      <section class="card">
+        <h2>Kenapa anak betah?</h2>
+        <ul class="features">
+          <li>✅ Soal otomatis baru tiap hari, naik pelan-pelan ala Kumon</li>
+          <li>✅ Target waktu personal, tanpa tekanan — timer tak terlihat</li>
+          <li>✅ Salah? Ada gambar model batang untuk membantu</li>
+          <li>✅ Kumpulkan bintang, kumpulkan streak, pamerkan avatar</li>
+          <li>✅ Laporan mingguan untuk orang tua (PDF + WhatsApp)</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Tentang proyek ini</h2>
+        <p>
+          SaasMath adalah aplikasi terbuka (MIT) untuk latihan hitung harian
+          sesuai Kurikulum Merdeka. Halaman ini adalah demo statis; aplikasi
+          penuh — akun anak &amp; orang tua, streak, toko avatar, laporan PDF
+          dan WhatsApp — berjalan di server.
+        </p>
+        <p>
+          Kode sumber:
+          <a
+            href="https://github.com/falconrapid19925/saasmath"
+            rel="noopener"
+            >github.com/falconrapid19925/saasmath</a
+          >
+        </p>
+      </section>
+
+      <footer>
+        SaasMath · untuk siswa kelas 4–6 SD 🇮🇩 ·
+        <a
+          href="https://github.com/falconrapid19925/saasmath/blob/main/LICENSE"
+          rel="noopener"
+          >MIT</a
+        >
+      </footer>
+    </main>
+    <script src="./demo.js" defer></script>
+  </body>
+</html>
