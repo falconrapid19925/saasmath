@@ -10,6 +10,11 @@ updates:
     groups:
       dev-dependencies:
         dependency-type: development
+    ignore:
+      # typescript-eslint (via eslint-config-next) does not support TS 7 yet
+      # https://github.com/typescript-eslint/typescript-eslint/issues/10940
+      - dependency-name: typescript
+        versions: ["7.x"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
