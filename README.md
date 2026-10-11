@@ -17,7 +17,7 @@
 
 SaasMath is a web app (PWA) for Indonesian children in kelas 4-6 SD. Each day the child plays one timed 10-15 minute math drill, built the way Kumon works. A ladder of small-step sets carries the curriculum, and each set has a Standard Completion Time (SCT) target. A mastery gate decides advancement, and a failed gate repeats the set as a freshly generated variant.
 
-Grading is instant and wrong answers trigger same-session self-correction. When a child stays stuck, a Singapore-math CPA layer intervenes and the same problem returns as a pictorial bar model (model batang) before the abstract form. A streak, stars, and a toko give the loop its gamification.
+Grading is instant and wrong answers trigger same-session self-correction. When a child stays stuck, a Singapore-math CPA layer intervenes with a visual hint, such as a bar model (model batang), before the abstract form returns. A streak, stars, and a toko give the loop its gamification.
 
 The content is aligned to Kurikulum Merdeka Fase B/C and sold direct to parents in Bahasa Indonesia. Prices from `src/lib/checkout-prices.ts`: Rp49.000 for one month, Rp129.000 for three, Rp229.000 for six, Rp399.000 for twelve. The PWA caches the last offered set, so a drill still runs with no network and queued submissions sync when connectivity returns.
 

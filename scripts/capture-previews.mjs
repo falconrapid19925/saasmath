@@ -33,7 +33,6 @@
 
 import { spawn, spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, mkdtempSync, rmSync, statSync } from "node:fs";
-import { createHmac } from "node:crypto";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -42,6 +41,12 @@ import { chromium } from "playwright-core";
 
 import { E2E_AUTH_SECRET, E2E_BASE_URL, E2E_PORT } from "../tests/e2e/helpers/e2e-env.mjs";
 import { DEMO_ACCOUNT } from "../src/data/demo-account.ts";
+import { createSessionToken, SESSION_COOKIE_NAME } from "../src/lib/auth.ts";
+import { answersEqual, formatAnswer } from "../src/lib/engine/answers.ts";
+
+// createSessionToken reads process.env.AUTH_SECRET when called; the spawned
+// web-server.mjs sets the same value for the server side.
+process.env.AUTH_SECRET ??= E2E_AUTH_SECRET;
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const outDir = path.join(repoRoot, "docs", "img");
@@ -49,105 +54,15 @@ const videoDir = mkdtempSync(path.join(os.tmpdir(), "saasmath-preview-"));
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// ---------------------------------------------------------------------------
-// Session token — byte-for-byte mirror of createSessionToken in
-// src/lib/auth.ts (base64url JSON payload + HMAC-SHA256 base64url signature).
-// ---------------------------------------------------------------------------
-
-/** Mirror of SESSION_COOKIE_NAME in src/lib/auth.ts. */
-const SESSION_COOKIE_NAME = "saasmath_session";
-/** Mirror of SESSION_TTL_SECONDS in src/lib/auth.ts (30 days). */
-const SESSION_TTL_SECONDS = 60 * 60 * 24 * 30;
-
-function createSessionToken(sub, role) {
-  const payload = { sub, role, exp: Math.floor(Date.now() / 1000) + SESSION_TTL_SECONDS };
-  const body = Buffer.from(JSON.stringify(payload)).toString("base64url");
-  const signature = createHmac("sha256", E2E_AUTH_SECRET).update(body).digest("base64url");
-  return `${body}.${signature}`;
-}
+// Session token and answer formatting/equality come from the real sources
+// (src/lib/auth.ts, src/lib/engine/answers.ts) via Node's native TypeScript
+// stripping, so the script can never drift from what the app renders.
 
 async function installSession(context, sub, role) {
   await context.clearCookies({ name: SESSION_COOKIE_NAME });
   await context.addCookies([
-    { name: SESSION_COOKIE_NAME, value: createSessionToken(sub, role), url: E2E_BASE_URL },
+    { name: SESSION_COOKIE_NAME, value: createSessionToken({ sub, role }), url: E2E_BASE_URL },
   ]);
-}
-
-// ---------------------------------------------------------------------------
-// Answer formatting / equality — mirrors of src/lib/engine/answers.ts (the
-// engine's own Bahasa-Indonesia conventions), so choice buttons are found by
-// exactly the label the app renders.
-// ---------------------------------------------------------------------------
-
-function formatInt(value) {
-  const sign = value < 0 ? "-" : "";
-  const digits = String(Math.abs(value));
-  let out = "";
-  for (let i = 0; i < digits.length; i++) {
-    if (i > 0 && (digits.length - i) % 3 === 0) out += ".";
-    out += digits[i];
-  }
-  return sign + out;
-}
-
-function formatDecimalFromUnits(units, places) {
-  const sign = units < 0 ? "-" : "";
-  const abs = Math.abs(units);
-  const scale = 10 ** places;
-  const whole = Math.floor(abs / scale);
-  const fracDigits = String(abs % scale).padStart(places, "0");
-  return `${sign}${formatInt(whole)},${fracDigits}`;
-}
-
-function formatAnswer(a) {
-  switch (a.kind) {
-    case "integer":
-      return formatInt(a.value);
-    case "decimal":
-      return formatDecimalFromUnits(Math.round(a.value * 10 ** a.places), a.places);
-    case "fraction":
-      return `${a.n}/${a.d}`;
-    case "mixed": {
-      const sign = a.w < 0 ? "-" : "";
-      const body = a.n === 0 ? `${Math.abs(a.w)}` : `${Math.abs(a.w)} ${a.n}/${a.d}`;
-      return `${sign}${body}`;
-    }
-    case "moneyRupiah":
-      return `Rp${formatInt(a.value)}`;
-    case "unitValue":
-      return `${formatInt(a.value)} ${a.unit}`;
-  }
-}
-
-function answerValue(a) {
-  switch (a.kind) {
-    case "integer":
-    case "decimal":
-    case "moneyRupiah":
-      return a.value;
-    case "fraction":
-      return a.n / a.d;
-    case "mixed": {
-      const magnitude = Math.abs(a.w) + a.n / a.d;
-      return a.w < 0 ? -magnitude : magnitude;
-    }
-    case "unitValue":
-      return a.value;
-  }
-}
-
-const VALUE_EPSILON = 1e-9;
-
-function answersEqual(a, b) {
-  if (a.kind === "unitValue" || b.kind === "unitValue") {
-    return (
-      a.kind === "unitValue" &&
-      b.kind === "unitValue" &&
-      a.unit.trim() === b.unit.trim() &&
-      Math.abs(a.value - b.value) <= VALUE_EPSILON
-    );
-  }
-  return Math.abs(answerValue(a) - answerValue(b)) <= VALUE_EPSILON;
 }
 
 // ---------------------------------------------------------------------------
@@ -554,6 +469,41 @@ async function main() {
   }
 }
 
+async function cleanup() {
+  shuttingDown = true;
+  try {
+    if (browser) await browser.close();
+  } catch (error) {
+    console.warn(`[preview] browser close: ${error}`);
+  }
+  if (server && server.exitCode === null) {
+    server.kill("SIGTERM");
+    await new Promise((resolve) => {
+      const killTimer = setTimeout(() => {
+        console.warn("[preview] server ignored SIGTERM for 15s — SIGKILL");
+        server.kill("SIGKILL");
+        setTimeout(resolve, 2000);
+      }, 15_000);
+      server.on("exit", () => {
+        clearTimeout(killTimer);
+        resolve();
+      });
+    });
+    console.log("[preview] server stopped");
+  }
+  rmSync(videoDir, { recursive: true, force: true }); // temp videos
+  rmSync(path.join(outDir, "palette.png"), { force: true }); // no-op safety
+}
+
+// A SIGINT/SIGTERM delivered to this process must run the same cleanup
+// instead of bypassing it and leaving the spawned web server and temp videos
+// behind.
+for (const signal of ["SIGINT", "SIGTERM"]) {
+  process.on(signal, () => {
+    cleanup().finally(() => process.exit(process.exitCode ?? 0));
+  });
+}
+
 main()
   .then(() => {
     console.log("[preview] done:");
@@ -564,28 +514,4 @@ main()
     console.error(`[preview] FAILED: ${error instanceof Error ? error.stack : error}`);
     process.exitCode = 1;
   })
-  .finally(async () => {
-    shuttingDown = true;
-    try {
-      if (browser) await browser.close();
-    } catch (error) {
-      console.warn(`[preview] browser close: ${error}`);
-    }
-    if (server && server.exitCode === null) {
-      server.kill("SIGTERM");
-      await new Promise((resolve) => {
-        const killTimer = setTimeout(() => {
-          console.warn("[preview] server ignored SIGTERM for 15s — SIGKILL");
-          server.kill("SIGKILL");
-          setTimeout(resolve, 2000);
-        }, 15_000);
-        server.on("exit", () => {
-          clearTimeout(killTimer);
-          resolve();
-        });
-      });
-      console.log("[preview] server stopped");
-    }
-    rmSync(videoDir, { recursive: true, force: true }); // temp videos
-    rmSync(path.join(outDir, "palette.png"), { force: true }); // no-op safety
-  });
+  .finally(cleanup);
