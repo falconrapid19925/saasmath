@@ -57,6 +57,7 @@ const playView = $("demo-play");
 const resultView = $("demo-result");
 const promptEl = $("demo-prompt");
 const progressText = $("demo-progress-text");
+const progressTrack = $("demo-progress-track");
 const progressFill = $("demo-progress-fill");
 const answerInput = $("demo-answer") as HTMLInputElement;
 
@@ -112,6 +113,8 @@ function startDrill(skillId: string): void {
   setupView.hidden = true;
   resultView.hidden = true;
   playView.hidden = false;
+  progressTrack.setAttribute("aria-valuemin", "0");
+  progressTrack.setAttribute("aria-valuemax", String(items.length));
   renderItem();
 }
 
@@ -119,9 +122,15 @@ function renderItem(): void {
   const index = answers.length;
   promptEl.textContent = items[index]?.prompt ?? "";
   progressText.textContent = `Soal ${index + 1} dari ${items.length}`;
-  progressFill.style.width = `${(index / items.length) * 100}%`;
+  setProgressBar(index);
   answerInput.value = "";
   answerInput.focus();
+}
+
+/** Visual fill and the screen-reader value move together. */
+function setProgressBar(answered: number): void {
+  progressFill.style.width = `${(answered / items.length) * 100}%`;
+  progressTrack.setAttribute("aria-valuenow", String(answered));
 }
 
 function submitAnswer(): void {
@@ -134,7 +143,7 @@ function submitAnswer(): void {
     return;
   }
   answers.push(given);
-  progressFill.style.width = `${(answers.length / items.length) * 100}%`;
+  setProgressBar(answers.length);
   if (answers.length < items.length) {
     renderItem();
   } else {
@@ -143,11 +152,12 @@ function submitAnswer(): void {
 }
 
 /**
- * Accepts plain digits and the Indonesian thousands convention ("1.000");
- * anything else non-empty is rejected as a typo, not silently skipped.
+ * Accepts plain digits or correctly grouped Indonesian thousands ("1.000");
+ * malformed input like "1.2" or "1 2" is rejected as a typo, not silently
+ * re-read as a different number.
  */
 function parseIntegerAnswer(raw: string): IntegerAnswer | null {
-  const cleaned = raw.replace(/\s+/g, "").replace(/\./g, "");
+  const cleaned = /^-?\d{1,3}(?:\.\d{3})+$/.test(raw) ? raw.replace(/\./g, "") : raw;
   if (!/^-?\d+$/.test(cleaned)) return null;
   const value = Number(cleaned);
   return Number.isSafeInteger(value) ? int(value) : null;
@@ -217,11 +227,13 @@ function showResult(elapsedMs: number): void {
 
 /** Indonesian duration text: "47,5 detik" / "1 menit 12 detik". */
 function formatDuration(seconds: number): string {
-  if (seconds < 60) {
+  if (Math.round(seconds) < 60) {
     const rounded = Math.round(seconds * 10) / 10;
     return `${String(rounded).replace(".", ",")} detik`;
   }
-  const minutes = Math.floor(seconds / 60);
-  const rest = Math.round(seconds % 60);
-  return `${minutes} menit ${rest} detik`;
+  // Round the total first so a boundary like 119,9 s cannot render "1 menit 60 detik".
+  const total = Math.round(seconds);
+  const minutes = Math.floor(total / 60);
+  const rest = total % 60;
+  return rest === 0 ? `${minutes} menit` : `${minutes} menit ${rest} detik`;
 }
