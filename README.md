@@ -6,6 +6,8 @@
 [![Node](https://img.shields.io/badge/node-26-339933?logo=node.js&logoColor=white)](package.json)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
+**[Try the static demo](https://falconrapid19925.github.io/saasmath/)** — a GitHub Pages landing page (Bahasa Indonesia) with a playable drill built from the real engine: fresh sets from `generateSet`, client-side grading via `gradeItems`, stars and mastery-gate verdicts. The full app needs a server; the page says so.
+
 SaasMath is a web app (PWA) that gives Indonesian children in kelas 4-6 SD a daily 10-15 minute timed math drill, built the way Kumon works: a fine-grained ladder of small-step sets, a Standard Completion Time (SCT) target per set, and mastery before advancing. Sets generate on demand from parameterized templates, grading is instant, wrong answers trigger same-session self-correction, and failed gates trigger automatic repetition with freshly generated variants. When a child gets stuck, a Singapore-math CPA layer intervenes — the same problem appears as a pictorial bar model ("model batang") or a light manipulative before the abstract form returns. The loop is wrapped in gamification (streaks, stars, a shop), aligned to Kurikulum Merdeka Fase B/C, and sold direct to parents in Bahasa Indonesia at Rp33.000-89.000/month depending on plan. (References like "plan 6" point at the internal design document that seeded this repo; it ships as part of the public git history but not the working tree.)
 
 ## Running it
@@ -23,7 +25,7 @@ The seed prints the demo login (parent `demo@saasmath.id`, child Budi, PIN 12345
 
 Optional env (all stub-safe without them): `DB_PATH` (default `dev.db`), `MIDTRANS_SERVER_KEY`, `MIDTRANS_IS_PRODUCTION`, `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`.
 
-Other scripts: `npm run build`, `npm start`, `npm run db:generate` (drizzle-kit SQL migrations into `drizzle/`). Test and check commands are in [Tests](#tests) below.
+Other scripts: `npm run build`, `npm start`, `npm run db:generate` (drizzle-kit SQL migrations into `drizzle/`), `npm run site:build` (esbuild-bundles `site/` into `site-dist/` for the GitHub Pages deploy from the `ghpages` branch — see `.github/workflows/pages.yml`). Test and check commands are in [Tests](#tests) below.
 
 ## Architecture
 
