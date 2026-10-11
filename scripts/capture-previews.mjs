@@ -44,9 +44,11 @@ import { DEMO_ACCOUNT } from "../src/data/demo-account.ts";
 import { createSessionToken, SESSION_COOKIE_NAME } from "../src/lib/auth.ts";
 import { answersEqual, formatAnswer } from "../src/lib/engine/answers.ts";
 
-// createSessionToken reads process.env.AUTH_SECRET when called; the spawned
-// web-server.mjs sets the same value for the server side.
-process.env.AUTH_SECRET ??= E2E_AUTH_SECRET;
+// createSessionToken reads process.env.AUTH_SECRET when called. Pin it to
+// the e2e secret unconditionally: web-server.mjs forces the same value on
+// the server side, and a developer's own AUTH_SECRET would sign cookies
+// with a different key.
+process.env.AUTH_SECRET = E2E_AUTH_SECRET;
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const outDir = path.join(repoRoot, "docs", "img");
