@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "drizzle/**",
     "out/**",
     ".zcode/**",
+    "site-dist/**",
+    "coverage/**",
+    "playwright-report/**",
   ]),
 ]);
 
