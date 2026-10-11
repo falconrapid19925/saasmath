@@ -1,6 +1,12 @@
 # SaasMath
 
-SaasMath is a web app (PWA) that gives Indonesian children in kelas 4-6 SD a daily 10-15 minute timed math drill, built the way Kumon works: a fine-grained ladder of small-step sets, a Standard Completion Time (SCT) target per set, and mastery before advancing. Sets generate on demand from parameterized templates, grading is instant, wrong answers trigger same-session self-correction, and failed gates trigger automatic repetition with freshly generated variants. When a child gets stuck, a Singapore-math CPA layer intervenes — the same problem appears as a pictorial bar model ("model batang") or a light manipulative before the abstract form returns. The loop is wrapped in gamification (streaks, stars, a shop), aligned to Kurikulum Merdeka Fase B/C, and sold direct to parents in Bahasa Indonesia at Rp33.000-89.000/month depending on plan. Full plan: `out/saasmath-plan.md` (section numbers below refer to it).
+[![CI](https://github.com/falconrapid19925/saasmath/actions/workflows/ci.yml/badge.svg)](https://github.com/falconrapid19925/saasmath/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/falconrapid19925/saasmath?include_prereleases&sort=semver)](https://github.com/falconrapid19925/saasmath/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Node](https://img.shields.io/badge/node-26-339933?logo=node.js&logoColor=white)](package.json)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
+SaasMath is a web app (PWA) that gives Indonesian children in kelas 4-6 SD a daily 10-15 minute timed math drill, built the way Kumon works: a fine-grained ladder of small-step sets, a Standard Completion Time (SCT) target per set, and mastery before advancing. Sets generate on demand from parameterized templates, grading is instant, wrong answers trigger same-session self-correction, and failed gates trigger automatic repetition with freshly generated variants. When a child gets stuck, a Singapore-math CPA layer intervenes — the same problem appears as a pictorial bar model ("model batang") or a light manipulative before the abstract form returns. The loop is wrapped in gamification (streaks, stars, a shop), aligned to Kurikulum Merdeka Fase B/C, and sold direct to parents in Bahasa Indonesia at Rp33.000-89.000/month depending on plan. (References like "plan 6" point at the internal design document that seeded this repo; it ships as part of the public git history but not the working tree.)
 
 ## Running it
 
@@ -92,3 +98,13 @@ npm run lint
 The vitest suite covers the engine generators, the authored content graph (`src/data/content.test.ts`), the server write path on an in-memory SQLite harness (`src/lib/server/test-db.ts`), route handlers, and the client layer. `tests/helpers/verifyItem.ts` re-derives each generated item's expected answer from its own prompt and compares it with `answersEqual`; the authored→engine bridge is probed skill-by-skill in `src/lib/server/family-params.test.ts`, with generated hint payloads run through the client normalizer (`normalizeHint`).
 
 The Playwright suite (`tests/e2e`: journey, offline-sync, paywall, pdf, shop) runs against a fresh temp SQLite DB and serves a **production** build (`tests/e2e/web-server.mjs`), because the PWA service worker registers only in a production build and the offline journey depends on it.
+
+## CI & releases
+
+Every push and PR runs the [CI workflow](.github/workflows/ci.yml): lint + typecheck, unit tests with v8 coverage (summary table on the run page, lcov/json as artifacts), a production build, and the Playwright e2e suite. Dependabot keeps npm dependencies and pinned action versions current.
+
+Releases are tag-driven: push a `v*` tag and the [Release workflow](.github/workflows/release.yml) re-runs the full gate, then publishes a GitHub release with generated notes. `workflow_dispatch` on either workflow is the dry run — same checks, nothing published. See [Releases](https://github.com/falconrapid19925/saasmath/releases).
+
+## Contributing & license
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, the pre-PR checklist, and commit/release conventions. MIT — see [LICENSE](LICENSE).

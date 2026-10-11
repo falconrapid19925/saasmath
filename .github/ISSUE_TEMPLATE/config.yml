@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions & discussions
+    url: https://github.com/falconrapid19925/saasmath/discussions
+    about: Ask anything about running, deploying, or extending SaasMath.

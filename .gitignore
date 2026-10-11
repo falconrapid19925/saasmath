@@ -28,6 +28,9 @@ drizzle/meta/
 test-results/
 playwright-report/
 
+# Vitest coverage output
+coverage/
+
 # Agent-generated HTML reports (out/saasmath-plan.md stays tracked)
 out/*.html
 
