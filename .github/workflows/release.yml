@@ -1,0 +1,84 @@
+# Release — cut a GitHub release from a version tag.
+#
+# Trigger: push a tag `v*` (e.g. `git tag v1.0.0 && git push origin v1.0.0`).
+# The run first passes the full quality gate (lint, typecheck, unit tests,
+# production build), then publishes the release with generated notes.
+#
+# `workflow_dispatch` is the dry run: same gate, but it only reports the
+# release it would create (tag/version/title) and publishes nothing — the
+# dispatch ref is a branch, so the publish step's tag guard never fires.
+
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (validate only, publish nothing)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Verify & release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Production build
+        run: npm run build
+        env:
+          AUTH_SECRET: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+
+      - name: Resolve release target
+        id: target
+        run: |
+          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+            echo "tag=$GITHUB_REF_NAME" >> "$GITHUB_OUTPUT"
+            echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+          else
+            version="$(node -p "require(\"./package.json\").version")"
+            echo "tag=v$version" >> "$GITHUB_OUTPUT"
+            echo "version=$version" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Report release plan (dry run)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          echo "### Release plan (dry run) — nothing will be published" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Tag: \`${{ steps.target.outputs.tag }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Version: \`${{ steps.target.outputs.version }}\` (package.json)" >> "$GITHUB_STEP_SUMMARY"
+          echo "- All checks passed (lint, typecheck, tests, build)." >> "$GITHUB_STEP_SUMMARY"
+          echo "Dry run: would create release ${{ steps.target.outputs.tag }}"
+
+      - name: Create GitHub release
+        if: ${{ github.ref_type == 'tag' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ steps.target.outputs.tag }}" \
+            --title "SaasMath ${{ steps.target.outputs.tag }}" \
+            --generate-notes \
+            --verify-tag

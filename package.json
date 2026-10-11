@@ -1,13 +1,13 @@
 {
   "name": "saasmath",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
   "description": "SaasMath — gamified Kumon-style daily math drills for Indonesian kelas 4-6 SD (Bahasa Indonesia PWA)",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
@@ -31,6 +31,7 @@
     "@types/node": "26.6.4",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
+    "@vitest/coverage-v8": "^5.0.3",
     "drizzle-kit": "0.31.11",
     "eslint": "9.39.5",
     "eslint-config-next": "16.3.8",
