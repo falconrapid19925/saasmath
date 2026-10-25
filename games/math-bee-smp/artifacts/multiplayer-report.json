@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "buildHash": "287fa4b35b65",
+  "kind": "real HTTP session simulation; not human/device trial",
+  "rooms": 2,
+  "guestSessions": 16,
+  "requests": 5394,
+  "durationMs": 272829,
+  "result": [
+    {
+      "room": "AVM2H4",
+      "turns": 32,
+      "tiebreaks": 1,
+      "winners": 8,
+      "scores": [
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480
+      ],
+      "firstScoreMs": 3065
+    },
+    {
+      "room": "ZQBYDH",
+      "turns": 32,
+      "tiebreaks": 1,
+      "winners": 8,
+      "scores": [
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480
+      ],
+      "firstScoreMs": 3069
+    }
+  ]
+}

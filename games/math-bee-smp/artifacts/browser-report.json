@@ -1,0 +1,252 @@
+{
+  "runId": "qa-browser-03",
+  "buildHash": "287fa4b35b65",
+  "browser": "154.0.8037.57",
+  "captures": [
+    {
+      "name": "desktop-welcome",
+      "diagnostics": {
+        "frame": 16,
+        "fps": 2,
+        "dpr": 1,
+        "info": {
+          "render": {
+            "calls": 18,
+            "triangles": 16669
+          },
+          "memory": {
+            "geometries": 11,
+            "textures": 4
+          }
+        },
+        "gpuRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+        "playerPositions": {}
+      }
+    },
+    {
+      "name": "mobile-welcome",
+      "diagnostics": {
+        "frame": 19,
+        "fps": 6,
+        "dpr": 1,
+        "info": {
+          "render": {
+            "calls": 18,
+            "triangles": 16669
+          },
+          "memory": {
+            "geometries": 11,
+            "textures": 4
+          }
+        },
+        "gpuRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+        "playerPositions": {}
+      }
+    },
+    {
+      "name": "mobile-lobby",
+      "diagnostics": {
+        "frame": 49,
+        "fps": 5,
+        "dpr": 1,
+        "info": {
+          "render": {
+            "calls": 19,
+            "triangles": 16639
+          },
+          "memory": {
+            "geometries": 13,
+            "textures": 5
+          }
+        },
+        "gpuRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+        "playerPositions": {
+          "76587a3d-b80a-40fe-bb48-cf0a69d7d05b": {
+            "x": -3,
+            "y": 0.13,
+            "z": 4
+          }
+        }
+      }
+    },
+    {
+      "name": "mobile-active-play",
+      "diagnostics": {
+        "frame": 104,
+        "fps": 4,
+        "dpr": 1,
+        "info": {
+          "render": {
+            "calls": 37,
+            "triangles": 25193
+          },
+          "memory": {
+            "geometries": 28,
+            "textures": 8
+          }
+        },
+        "gpuRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+        "playerPositions": {
+          "76587a3d-b80a-40fe-bb48-cf0a69d7d05b": {
+            "x": -1.777058823529413,
+            "y": 0.13,
+            "z": 4
+          },
+          "2a17ad02-c5ff-4703-97fb-a372ee91b454": {
+            "x": -1,
+            "y": 0.13,
+            "z": 4
+          },
+          "65151a53-2bee-4d8c-99db-dbc3867d230a": {
+            "x": 1,
+            "y": 0.13,
+            "z": 4
+          },
+          "d19db7e8-343e-4d37-92fb-0abc3ceff929": {
+            "x": 0.06545530659312832,
+            "y": 1.0096303243361033,
+            "z": -5.58617933179578
+          }
+        }
+      }
+    },
+    {
+      "name": "mobile-feedback",
+      "diagnostics": {
+        "frame": 136,
+        "fps": 3,
+        "dpr": 1,
+        "info": {
+          "render": {
+            "calls": 37,
+            "triangles": 25193
+          },
+          "memory": {
+            "geometries": 28,
+            "textures": 8
+          }
+        },
+        "gpuRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+        "playerPositions": {
+          "76587a3d-b80a-40fe-bb48-cf0a69d7d05b": {
+            "x": -1.777058823529413,
+            "y": 0.13,
+            "z": 4
+          },
+          "2a17ad02-c5ff-4703-97fb-a372ee91b454": {
+            "x": -1,
+            "y": 0.13,
+            "z": 4
+          },
+          "65151a53-2bee-4d8c-99db-dbc3867d230a": {
+            "x": 1,
+            "y": 0.13,
+            "z": 4
+          },
+          "d19db7e8-343e-4d37-92fb-0abc3ceff929": {
+            "x": 0.000048868002985374135,
+            "y": 1.0399495390445168,
+            "z": -5.799840364523581
+          }
+        }
+      }
+    },
+    {
+      "name": "mobile-small-360",
+      "diagnostics": {
+        "frame": 146,
+        "fps": 5,
+        "dpr": 1,
+        "info": {
+          "render": {
+            "calls": 38,
+            "triangles": 25273
+          },
+          "memory": {
+            "geometries": 28,
+            "textures": 8
+          }
+        },
+        "gpuRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+        "playerPositions": {
+          "76587a3d-b80a-40fe-bb48-cf0a69d7d05b": {
+            "x": -1.777058823529413,
+            "y": 0.13,
+            "z": 4
+          },
+          "2a17ad02-c5ff-4703-97fb-a372ee91b454": {
+            "x": -0.4065696597405991,
+            "y": 0.6311106426533284,
+            "z": -1.815617334542128
+          },
+          "65151a53-2bee-4d8c-99db-dbc3867d230a": {
+            "x": 1,
+            "y": 0.13,
+            "z": 4
+          },
+          "d19db7e8-343e-4d37-92fb-0abc3ceff929": {
+            "x": 2.3943130037529405,
+            "y": 0.4040821551255015,
+            "z": 2.0214224789262714
+          }
+        }
+      }
+    },
+    {
+      "name": "desktop-active-room",
+      "diagnostics": {
+        "frame": 16,
+        "fps": 1,
+        "dpr": 1,
+        "info": {
+          "render": {
+            "calls": 39,
+            "triangles": 25353
+          },
+          "memory": {
+            "geometries": 28,
+            "textures": 8
+          }
+        },
+        "gpuRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+        "playerPositions": {
+          "76587a3d-b80a-40fe-bb48-cf0a69d7d05b": {
+            "x": -1.777058823529413,
+            "y": 0.13,
+            "z": 4
+          },
+          "2a17ad02-c5ff-4703-97fb-a372ee91b454": {
+            "x": -0.10539922456186433,
+            "y": 0.9168448922546826,
+            "z": -4.7670875992937285
+          },
+          "65151a53-2bee-4d8c-99db-dbc3867d230a": {
+            "x": 1,
+            "y": 0.13,
+            "z": 4
+          },
+          "d19db7e8-343e-4d37-92fb-0abc3ceff929": {
+            "x": 3,
+            "y": 0.13,
+            "z": 4
+          }
+        }
+      }
+    }
+  ],
+  "checks": [
+    "real touch joystick moves authoritative avatar position",
+    "guest create room via touch UI",
+    "host start requires four sessions",
+    "mobile active question/keypad",
+    "actual button answer/private practice",
+    "server feedback visible",
+    "mobile no horizontal overflow",
+    "member refresh restores same room identity",
+    "mid-match new participant rejected",
+    "existing member invitation URL restores room"
+  ],
+  "errors": [],
+  "network": [],
+  "status": "PASS"
+}

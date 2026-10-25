@@ -14,6 +14,7 @@ const eslintConfig = defineConfig([
     ".zcode/**",
     "site-dist/**",
     "coverage/**",
+    "games/math-bee-smp/**",
     "playwright-report/**",
   ]),
 ]);

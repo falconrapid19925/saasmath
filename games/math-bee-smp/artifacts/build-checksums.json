@@ -1,0 +1,11 @@
+{
+  "package.json": "c21d093d6e346a1d85e708c13342b4f16d7a2ea5deb6a8111d2ceac441c84e7f",
+  "src/game/engine.ts": "62ba85b095698be85214a0c6c104a4ca2f7a89055cc5dd370e539d940bcdabbc",
+  "src/game/math.ts": "5d0accd4ceb3ce8ab4010b4fe305c529c0e9441caf427fb2374a41a25913e7ee",
+  "src/server/worker.ts": "96721b07c6cb5f88467cc9b9e73fc604e59366fcab9cfff88a81bb02faafc3b2",
+  "src/server/store.ts": "877ef8145ba54ac2c20843c89620b88a41ebdaba7d5e0b4f0530b134e3ca39b4",
+  "src/client/Game.tsx": "fb0a7ce62c6de515a059b2efbd2f70d0beabd2cf0b3530852d25ff714fce09ae",
+  "src/client/World.tsx": "378b3236c8cbe6bc754600b0abf8fab57ba5869de8f38609aa9abb7ca1c79c1b",
+  "dist/server/index.js": "713adb6ea2aeca6fbb99d9cfea9c11d3927f0c49be5a395d7b977be4f580ac1c",
+  ".openai/hosting.json": "22e7677e51da8e4e87411c1f796e0c0a422faafd5b3cbafae0380ae44fb26a41"
+}

@@ -1,0 +1,15 @@
+node_modules/
+client-dist/
+dist/
+.wrangler/
+.sites-runtime/
+outputs/
+artifacts/screenshots/
+artifacts/qa-browser-*/
+.env*
+.dev.vars*
+*.tsbuildinfo
+playwright-report/
+test-results/
+
+artifacts/qa-render-*/

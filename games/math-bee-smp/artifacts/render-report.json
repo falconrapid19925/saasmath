@@ -1,0 +1,69 @@
+{
+  "status": "PASS",
+  "buildHash": "287fa4b35b65",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "avatarCount": 8,
+  "diagnostics": {
+    "frame": 49,
+    "fps": 4,
+    "dpr": 1,
+    "info": {
+      "render": {
+        "calls": 61,
+        "triangles": 36653
+      },
+      "memory": {
+        "geometries": 48,
+        "textures": 12
+      }
+    },
+    "gpuRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "playerPositions": {
+      "474230a9-f98a-43b9-a520-4eb307608c1a": {
+        "x": -0.0022397574251300395,
+        "y": 1.0384879828814118,
+        "z": -5.792683459077908
+      },
+      "cf7344a1-4bb7-4be7-8d5a-4876e1318313": {
+        "x": -1,
+        "y": 0.13,
+        "z": 4
+      },
+      "da8f0051-14a9-41a8-8f7a-6952591a43dd": {
+        "x": 1,
+        "y": 0.13,
+        "z": 4
+      },
+      "d328df4b-be40-4551-9893-562ad747f0e6": {
+        "x": 3,
+        "y": 0.13,
+        "z": 4
+      },
+      "8d25001d-5559-4955-ab78-b90560ebaf03": {
+        "x": -3,
+        "y": 0.13,
+        "z": 6
+      },
+      "64e195b4-463e-43c8-9069-d78e8b46ff41": {
+        "x": -1,
+        "y": 0.13,
+        "z": 6
+      },
+      "904372c1-41ee-4f56-9f54-56c09f28e416": {
+        "x": 1,
+        "y": 0.13,
+        "z": 6
+      },
+      "542e0845-b74b-40e1-9209-456ca1a610fe": {
+        "x": 3,
+        "y": 0.13,
+        "z": 6
+      }
+    }
+  },
+  "errors": [],
+  "limitation": "SwiftShader software rendering; FPS is not evidence of physical phone performance."
+}

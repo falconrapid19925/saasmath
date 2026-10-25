@@ -1,0 +1,31 @@
+{
+  "name": "math-bee-smp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm run build && node scripts/dev.mjs",
+    "build": "node scripts/build-client.mjs && node scripts/build-worker.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test test/*.test.ts",
+    "db:generate": "drizzle-kit generate"
+  },
+  "dependencies": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "three": "file:vendor/three"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "drizzle-kit": "0.31.11",
+    "drizzle-orm": "0.45.3",
+    "esbuild": "0.28.2",
+    "playwright": "1.64.0",
+    "typescript": "6.0.3"
+  },
+  "engines": {
+    "node": ">=24.13.0"
+  }
+}

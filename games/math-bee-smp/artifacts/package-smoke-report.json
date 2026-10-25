@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "kind": "extracted downloadable package; no node_modules and no install",
+  "checks": [
+    "fresh SQLite migrations",
+    "embedded HTML and JS responses",
+    "four independent guest credentials",
+    "shared room start",
+    "fresh 30-second question",
+    "correct answer scoring and feedback"
+  ],
+  "requests": 34,
+  "node": "v24.19.0"
+}

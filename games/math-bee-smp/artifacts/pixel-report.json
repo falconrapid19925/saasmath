@@ -1,0 +1,82 @@
+{
+  "kind": "full viewport screenshot pixel variance; not isolated canvas grading",
+  "captures": [
+    {
+      "capture": "desktop-active-room.png",
+      "width": 1440,
+      "height": 1000,
+      "rgbVariance": [
+        1010.0327415466309,
+        343.08665519580245,
+        585.0311733335257
+      ],
+      "nonblank": true
+    },
+    {
+      "capture": "desktop-welcome.png",
+      "width": 1440,
+      "height": 1000,
+      "rgbVariance": [
+        1294.8013226985931,
+        546.4704904817045,
+        778.9470056146383
+      ],
+      "nonblank": true
+    },
+    {
+      "capture": "mobile-active-play.png",
+      "width": 390,
+      "height": 844,
+      "rgbVariance": [
+        841.1081748567522,
+        552.4030067771673,
+        709.7454981468618
+      ],
+      "nonblank": true
+    },
+    {
+      "capture": "mobile-feedback.png",
+      "width": 390,
+      "height": 844,
+      "rgbVariance": [
+        632.5767224095762,
+        349.2318446598947,
+        475.8739254325628
+      ],
+      "nonblank": true
+    },
+    {
+      "capture": "mobile-lobby.png",
+      "width": 390,
+      "height": 844,
+      "rgbVariance": [
+        1126.2306324504316,
+        736.2095278166234,
+        883.3672608733177
+      ],
+      "nonblank": true
+    },
+    {
+      "capture": "mobile-small-360.png",
+      "width": 360,
+      "height": 640,
+      "rgbVariance": [
+        1136.3600546084344,
+        400.7887707799673,
+        626.8917462192476
+      ],
+      "nonblank": true
+    },
+    {
+      "capture": "mobile-welcome.png",
+      "width": 390,
+      "height": 1001,
+      "rgbVariance": [
+        1558.0698810778558,
+        996.6428298354149,
+        1182.1407735347748
+      ],
+      "nonblank": true
+    }
+  ]
+}

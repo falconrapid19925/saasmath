@@ -1,0 +1,15 @@
+{
+  "name": "three",
+  "version": "0.183.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./build/three.module.min.js",
+      "default": "./build/three.module.min.js"
+    }
+  },
+  "module": "./build/three.module.min.js",
+  "license": "MIT",
+  "types": "./types/index.d.ts"
+}
